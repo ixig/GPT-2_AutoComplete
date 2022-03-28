@@ -1,3 +1,6 @@
+.DS_Store
+distilgpt2-mlm/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

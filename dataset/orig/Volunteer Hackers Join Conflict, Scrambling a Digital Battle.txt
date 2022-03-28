@@ -1,0 +1,69 @@
+Volunteer Hackers Join Conflict, Scrambling a Digital Battlefield
+
+The hackers came from around the world. They knocked Russian and Ukrainian government websites offline, graffitied antiwar messages onto the home pages of Russian media outlets and leaked data from rival hacking operations. And they swarmed into chat rooms, awaiting new instructions and egging each other on.
+
+The war in Ukraine has provoked an onslaught of cyberattacks by apparent volunteers unlike any that security researchers have seen in previous conflicts, creating widespread disruption, confusion and chaos that researchers fear could provoke more serious attacks by nation-state hackers, escalate the war on the ground or harm civilians.
+
+“It is crazy, it is bonkers, it is unprecedented,” said Matt Olney, the director of threat intelligence at the security firm Cisco Talos. “This is not going to be solely a conflict among nations. There are going to be participants that are not under the strict control of any government.”
+
+The online battles have blurred the lines between state-backed hackers and patriotic amateurs, making it difficult for governments to understand who is attacking them and how to retaliate. But both Ukraine and Russia appear to have embraced tech-savvy volunteers, creating channels on the chat app Telegram to direct them to target specific websites.
+
+Hackers have inserted themselves in international conflicts before in places like Syria. But experts said that those efforts have attracted fewer participants. The hundreds of hackers now racing to support their respective governments represent a drastic and unpredictable expansion of cyberwarfare.
+
+The involvement of the volunteer hackers makes it more difficult to determine who is responsible for an online attack. Some of the hackers said they were Ukrainians living inside and outside the country. Some said they were citizens of other countries who were simply interested in the conflict. It was impossible in some circumstances to verify their identities.
+
+Their attacks stand apart from the sophisticated incursions made by nation-state hackers in recent years. While hackers affiliated with the Russian government have quietly infiltrated American government agencies and Fortune 500 companies, these participants have loudly proclaimed their allegiances and used simpler methods to topple or deface websites.
+
+And while their tactics appear to have been successful in some instances, security researchers cautioned it was unrealistic to believe cyberattacks by volunteer hackers without specialized technical expertise would play a determinative role in the military campaign on the ground.
+
+“The land invasion is advancing, people are suffering, buildings are being destroyed,” said Lukasz Olejnik, an independent cybersecurity researcher and a former cyberwarfare adviser for the International Committee of the Red Cross in Geneva. “Cyberattacks can’t realistically impact this.”
+
+Ukraine has been more deliberate about recruiting a volunteer hacking force. In Telegram channels, participants cheer their collaboration with the government in going after targets such as Sberbank, the Russian state-owned bank. From Russia, where links between the government and hacking groups have long raised alarms among Western officials, there has not been the same kind of overt calls to action.
+
+“We are creating an I.T. army,” Ukraine’s minister of digital transformation, Mykhailo Fedorov, tweeted on Saturday, directing cybersecurity enthusiasts to a Telegram channel that contained instructions for knocking Russian websites offline. “There will be tasks for everyone.” By Friday, the Telegram channel had more than 285,000 subscribers.
+
+Inside the main English-language Telegram page for the I.T. Army of Ukraine is a 14-page introductory document providing details about how people can participate, including what software to download to mask their whereabouts and identity. Every day, new targets are listed, including websites, telecommunications firms, banks and A.T.M. processors.
+
+Yegor Aushev, the co-founder of the Ukrainian cybersecurity company Cyber Unit Technologies, said he was flooded with notes after posting on social media a call for programmers to get involved. His company offered a $100,000 reward for those who identify flaws in the code of Russian cyber targets.
+
+Mr. Aushev said there were more than 1,000 people involved in his effort, working in close collaboration with the government. People were only allowed to join if somebody vouched for them. Organized into small groups, they were aiming to hit high-impact targets like infrastructure and logistics systems important to the Russian military.
+
+“It’s become an independent machine, a distributed international digital army,” Mr. Aushev said. “The biggest hacks against Russia will be soon,” he added, without elaborating.
+
+A government spokesman confirmed the work with Mr. Aushev.
+
+Figuring out who is behind a cyberattack is always difficult. Groups falsely take credit or boast of a bigger impact than actually occurred. But this week there was a string of attacks against Russian targets. The country’s largest stock exchange, a state-controlled bank and the Russian Foreign Ministry were taken offline for a time after being targeted by Ukraine’s volunteer hackers.
+
+On Monday, TripAdvisor and Google Maps halted reviews at some locations in Russia, Ukraine and Belarus after pro-Ukraine volunteers targeted the sites to share uncensored information with the Russian public about the war.
+
+On Wednesday, the website of the main Russian intelligence service, the F.S.B., was declared a target by the group. A few hours later, a picture was posted to the I.T. Army Telegram channel showing it had been taken down, a claim that could not be independently verified.
+
+“They could not overcome your attacks,” the group said on Telegram, a message that was reposted by Mr. Fedorov.
+
+The worst fears of military analysts and cybersecurity experts — that Russia would use devastating cyberattacks to take down critical Ukrainian infrastructure like energy, government services and internet access — have not yet occurred.
+
+Yet the involvement of nongovernment groups could escalate quickly and cause unintended consequences, experts warned. A malware attack against one target could quickly spill over and become uncontrollable, as it did during a 2017 attack on Ukrainian government and business computer systems. Or a government might mistake an amateur attack for a state-backed one and decide to retaliate.
+
+“In this quickly escalating situation they are taking steps on behalf of the government that can have very serious repercussions on civilians. This is the big risk,” said Klara Jordan, chief public policy officer at CyberPeace Institute in Geneva.
+
+Alex Holden, who founded the cybersecurity firm Hold Security and who has studied Russian ransomware groups, said attacks by volunteers on the Russian government were likely to draw a stiff response.
+
+“Those that support the Russian government and their invasion in Ukraine are preparing their retaliation against a number of different targets,” Mr. Holden said.
+
+In a Telegram channel called Russian Cyber Front, pro-Russia hackers were instructed to target a Ukrainian government website through which citizens can access digital copies of their drivers’ licenses, passports and other documentation. “Attack those who threaten our I.T. infrastructure and dare to attack our resources,” the channel instructed. It was not clear whether their efforts succeeded.
+
+Over the past two weeks, there have been a number of cyberattacks of Ukrainian targets without clear attribution of who was behind the assaults, according to CyberPeace Institute, which has been tracking cybersecurity events in the war.
+
+Malware linked to Russia targeted Ukrainian government computer systems in the days before the invasion, Microsoft said this week, and Ukrainian officials said Russia was likely behind another attack that took down some mobile services. There have been unattributed attacks against an English-language news outlet, the Kyiv Post, and a border control station where people were fleeing into Romania, according to CyberPeace Institute.
+
+Last week, a ransomware group known as Conti declared its support for Russia. “If anybody will decide to organize a cyberattack or any war activities against Russia, we are going to use our all possible resources to strike back at the critical infrastructures of an enemy,” the group, which is known for capturing corporate data and charging companies to return it, said in a blog post.
+
+But days later, internal files from Conti began to leak online — the apparent result of a hacking operation. The files exposed discussions among members of the group and some of the digital wallets they used to hold cryptocurrency.
+
+In neighboring Belarus, a hacktivist group called Belarusian Cyber Partisans said it had targeted train services in Belarus that were carrying Russian military supplies toward Ukraine, though there was not independent verification of whether the work was successful.
+
+Cyber Partisans, formed in 2020 to oppose the authoritarian government of President Aleksandr G. Lukashenko of Belarus, has become a model for hacktivists for leaking troves of information from government and police databases.
+
+After Russia began using Belarus as a staging area for the invasion, the group began working with Ukrainian activists, lending technical support and helping recruit new volunteers.
+
+“This is war and you fight back,” said Yuliana Shemetovets, a U.S.-based spokeswoman for the Cyber Partisans.
