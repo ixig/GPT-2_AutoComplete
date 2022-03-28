@@ -1,16 +1,16 @@
-# A Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
+# Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
 
-## Building a Better Text-completion prediction engine using Transfer Learning
+## Building a Better Text-completion Prediction Engine with Transformers
 
 <p>&nbsp;</p>
 
-Five journalists lost their lives in the course of performing their work in just the first month of the 2022 Russia-Ukraine War.
+Five journalists have lost their lives in the course of performing their work in just the first month of the 2022 Russia-Ukraine War.
 
 <p align="center">
 <img src="assets/UkraineJournalistsKilled.jpg" alt="5 journalists killed in 1 month" width=500>
 </p>
 
-The Internet is awash with examples of auto-completion fails. In particular, the generic next-word auto-completion suggestions offered by the virtual keyboard of a smartphone or tablet remains woefully bad even for casual conversational text, and even more so on articles for more specialized domains, such as international journalism or technical blogging.
+The Internet is awash with examples of auto-completion fails. In particular, the next-word auto-completion suggestions offered by the generic virtual keyboard of a smartphone or tablet remains woefully bad even for casual conversational text, and even more so for writing articles in more specialized domains, such as international journalism or technical blogging.
 
 <p align="center">
 <img src="assets/HowDoIConvertTo.png" alt="How do I convert to ...?" width=500>
@@ -18,9 +18,9 @@ The Internet is awash with examples of auto-completion fails. In particular, the
 
 ---
 
-I fine-tuned a Hugging Face [DistilGPT2](https://huggingface.co/distilgpt2) Language Model on a corpus consisting of one week of news articles from the NYT and AP News at the start of the war. The news articles were [scraped](https://github.com/ixig/GPT-2_AutoComplete/blob/main/nyt.py) using the NYT Developer APIs in conjunction with Beautiful Soup for HTML parsing.
+I fine-tuned a Hugging Face [DistilGPT2](https://huggingface.co/distilgpt2) Language Model on a corpus consisting of just *one week* of news articles from the NYT and AP News at the start of the war. The news articles were [scraped](https://github.com/ixig/GPT-2_AutoComplete/blob/main/nyt.py) using the NYT Developer APIs in conjunction with Beautiful Soup for HTML parsing.
 
-Preprocessing was done using Python RegEx in the [first step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/preproc1.py). In the [second step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/preproc2.py), NER using Spacy was used to normalize names of people and places. The [final step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/combine.py) was to combine all sentences from all articles into one line of text which will then be chunked into a context length of 128 tokens for [fine-tuninng](https://github.com/ixig/GPT-2_AutoComplete/blob/main/UkraineTrainTextGen.ipynb).
+Preprocessing was done using Python RegEx in the [first step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/preproc1.py). In the [second step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/preproc2.py), NER using Spacy was used to normalize names of people and places. The [final step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/combine.py) was to combine all sentences from all articles into one line of text which will then be chunked into a context length of 128 tokens for [fine-tuning](https://github.com/ixig/GPT-2_AutoComplete/blob/main/UkraineTrainTextGen.ipynb) a Causal Language Model.
 
 The goal is to show a proof-of-concept of a context fine-tuned, text-prediction auto-completion editor for journalists who have to report from the field under trying conditions and severe time pressures.
 
@@ -47,3 +47,112 @@ This shows that, if necessary (e.g. due to limited screen space), limiting the p
 The video below shows the auto-completion engine being evaluated on new3.txt -- you can see (based on word coloring) the distribution of the Top-1/5/10 word hits and what types of words were successfully predicted. You can pass the `-m` option to `predict.py` to have it annotate the ranked predictions in the output text for all missed words.
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dkYQAd-K-9U/0.jpg)](https://www.youtube.com/watch?v=dkYQAd-K-9U)
+
+---
+
+## How To Use
+
+### Example Usage :
+```
+export NYT_API_KEY="..."
+
+# Run the following command daily to collect more articles
+python nyt.py dataset/orig
+
+# Once the corpus has been assembled, pre-process the data
+python preproc1.py dataset/orig/ dataset/preproc1/
+python preproc2.py dataset/preproc1/ dataset/preproc2/
+python combine.py dataset/combine.txt
+
+# Fine-Tuning takes only ~8mins on a P100 GPU
+jupyter-notebook UkraineTrainTextGen.ipynb
+
+# Copy the trained model to your local machine
+cp <hf_model_ckpt> ./distilgpt2-mlm
+
+# Start typing a fresh article on the (rudimentary!) editor
+python editor.py _new1.txt
+
+# Evaluate the Performance of the model or out-of-sample article
+# Make sure to run preproc1.py on it first (no need for preproc2)
+python predict.py new1.txt _new1.txt -m
+```
+
+### nyt.py :
+```
+usage: nyt.py [-h] [-k API_KEY] save_dir
+
+Scrape NYT News Articles using NYT Developer APIs
+
+positional arguments:
+  save_dir    Saved Articles Directory
+
+optional arguments:
+  -k API_KEY  NYT Developer API Key
+
+The API Key can be provided by setting the environmental variable NYT_API_KEY,
+or by overriding using the -k command argument
+```
+
+### preproc1.py :
+```
+usage: preproc1.py [-h] input_dir output_dir
+
+Preprocess Text Files - Step #1
+
+positional arguments:
+  input_dir   Input Files Directory
+  output_dir  Output Files Directory
+```
+
+### preproc2.py :
+```
+usage: preproc2.py [-h] input_dir output_dir
+
+Preprocess Text Files - Step #2
+
+positional arguments:
+  input_dir   Input Files Directory
+  output_dir  Output Files Directory
+```
+
+### combine.py :
+```
+usage: combine.py [-h] input_dir fout
+
+Combine Individual Text Files into Single (one-line) File
+
+positional arguments:
+  input_dir   Input Files Directory
+  fout        Output Combined Texts File
+```
+
+### editor.py :
+```
+usage: editor.py [-h] [-d CKPT] fout
+
+Text Auto-Completer Editor
+
+positional arguments:
+  fout        Output File
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -d CKPT     Model Checkpoint Directory
+```
+
+### predict.py :
+```
+usage: predict.py [-h] [-m] [-d CKPT] fin fout
+
+Evaluate performance of Text Auto-Completer on file
+
+positional arguments:
+  fin         Input File for Evaluation
+  fout        Output File with Predictions Annotated
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -m          Annotate with Prediction Misses
+  -d CKPT     Model Checkpoint Directory
+```

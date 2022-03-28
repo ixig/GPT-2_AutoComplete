@@ -27,6 +27,10 @@ def argparser():
 
     parser = argparse.ArgumentParser(
         description="Scrape NYT News Articles using NYT Developer APIs",
+        epilog=(
+            "The API Key can be provided by setting the environmental variable NYT_API_KEY, "
+            "or by overriding using the -k command argument"
+        ),
     )
     parser.add_argument("save_dir", type=dir_path, help="Saved Articles Directory")
     try:
