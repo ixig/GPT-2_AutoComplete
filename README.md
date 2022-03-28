@@ -1,13 +1,24 @@
-# GPT-2_AutoComplete
-## A Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
+# A Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
 
-Five journalists lost their lives in the course of performingtheir work in just the first month of the 2022 Russia-Ukraine War.
+## Building a Better Text-completion prediction engine using Transfer Learning
+
+<p>&nbsp;</p>
+
+Five journalists lost their lives in the course of performing their work in just the first month of the 2022 Russia-Ukraine War.
 
 <p align="center">
-<img src="UkraineJournalistsKilled.jpg" alt="5 journalists killed in 1 month" width=500>
+<img src="assets/UkraineJournalistsKilled.jpg" alt="5 journalists killed in 1 month" width=500>
 </p>
 
-I fine-tuned a Hugging Face DistilGPT2 Language Model on a corpus consisting of one week of news articles from the NYT and AP News at the start of the war. The news articles were [scraped](https://github.com/ixig/GPT-2_AutoComplete/blob/main/nyt.py) using the NYT Developer APIs in conjunction with Beautiful Soup for HTML parsing.
+The Internet is awash with examples of auto-completion fails. In particular, the generic next-word auto-completion suggestions offered by the virtual keyboard of a smartphone or tablet remains woefully bad even for casual conversational text, and even more so on articles for more specialized domains, such as international journalism or technical blogging.
+
+<p align="center">
+<img src="assets/HowDoIConvertTo.png" alt="How do I convert to ...?" width=500>
+</p>
+
+---
+
+I fine-tuned a Hugging Face [DistilGPT2](https://huggingface.co/distilgpt2) Language Model on a corpus consisting of one week of news articles from the NYT and AP News at the start of the war. The news articles were [scraped](https://github.com/ixig/GPT-2_AutoComplete/blob/main/nyt.py) using the NYT Developer APIs in conjunction with Beautiful Soup for HTML parsing.
 
 Preprocessing was done using Python RegEx in the [first step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/preproc1.py). In the [second step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/preproc2.py), NER using Spacy was used to normalize names of people and places. The [final step](https://github.com/ixig/GPT-2_AutoComplete/blob/main/combine.py) was to combine all sentences from all articles into one line of text which will then be chunked into a context length of 128 tokens for [fine-tuninng](https://github.com/ixig/GPT-2_AutoComplete/blob/main/UkraineTrainTextGen.ipynb).
 
