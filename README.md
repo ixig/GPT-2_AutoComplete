@@ -42,6 +42,8 @@ The following table shows the results of [evaluating](https://github.com/ixig/GP
 
 This shows that, if necessary (e.g. due to limited screen space), limiting the predictions shown to just the Top-5 Hits still results in 85% of the editor's word prediction capabilities being retained.
 
+Prediction results for the evaluation text can be found in `/results`. These files are ANSI-colored text files. To view, simply `clear && cat xxx.ansi` on a color-enabled terminal window, or Preview in VS Code using the [ANSI Colors](https://marketplace.visualstudio.com/items?itemName=iliazeus.vscode-ansi) extension.
+
 ---
 
 The video below shows the auto-completion engine being evaluated on new3.txt -- you can see (based on word coloring) the distribution of the Top-1/5/10 word hits and what types of words were successfully predicted. You can pass the `-m` option to `predict.py` to have it annotate the ranked predictions in the output text for all missed words.
@@ -52,7 +54,7 @@ The video below shows the auto-completion engine being evaluated on new3.txt -- 
 
 ## How To Use
 
-### Example Usage :
+#### Example Usage :
 ```
 export NYT_API_KEY="..."
 
@@ -78,7 +80,7 @@ python editor.py _new1.txt
 python predict.py new1.txt _new1.txt -m
 ```
 
-### nyt.py :
+#### nyt.py :
 ```
 usage: nyt.py [-h] [-k API_KEY] save_dir
 
@@ -94,7 +96,7 @@ The API Key can be provided by setting the environmental variable NYT_API_KEY,
 or by overriding using the -k command argument
 ```
 
-### preproc1.py :
+#### preproc1.py :
 ```
 usage: preproc1.py [-h] input_dir output_dir
 
@@ -105,7 +107,7 @@ positional arguments:
   output_dir  Output Files Directory
 ```
 
-### preproc2.py :
+#### preproc2.py :
 ```
 usage: preproc2.py [-h] input_dir output_dir
 
@@ -116,7 +118,7 @@ positional arguments:
   output_dir  Output Files Directory
 ```
 
-### combine.py :
+#### combine.py :
 ```
 usage: combine.py [-h] input_dir fout
 
@@ -127,7 +129,7 @@ positional arguments:
   fout        Output Combined Texts File
 ```
 
-### editor.py :
+#### editor.py :
 ```
 usage: editor.py [-h] [-d CKPT] fout
 
@@ -141,7 +143,7 @@ optional arguments:
   -d CKPT     Model Checkpoint Directory
 ```
 
-### predict.py :
+#### predict.py :
 ```
 usage: predict.py [-h] [-m] [-d CKPT] fin fout
 
