@@ -52,6 +52,17 @@ The video below shows the auto-completion engine being evaluated on new3.txt -- 
 
 ---
 
+## How to Setup
+```
+git clone https://github.com/ixig/GPT-2_AutoComplete.git
+cd GPT-2_AutoComplete
+conda create --name gpt2ac --file requirements.txt
+conda activate gpt2ac
+python -m spacy download en_core_web_md
+```
+
+---
+
 ## How To Use
 
 #### Example Usage :
@@ -64,7 +75,7 @@ python nyt.py dataset/orig
 # Once the corpus has been assembled, pre-process the data
 python preproc1.py dataset/orig/ dataset/preproc1/
 python preproc2.py dataset/preproc1/ dataset/preproc2/
-python combine.py dataset/combine.txt
+python combine.py dataset/preproc2/ dataset/combine.txt
 
 # Fine-Tuning takes only ~8mins on a P100 GPU
 jupyter-notebook UkraineTrainTextGen.ipynb
@@ -77,7 +88,7 @@ python editor.py _new1.txt
 
 # Evaluate the Performance of the model or out-of-sample article
 # Make sure to run preproc1.py on it first (no need for preproc2)
-python predict.py new1.txt _new1.txt -m
+python predict.py dataset/test/new1.txt _new1.txt -m
 ```
 
 #### nyt.py :
