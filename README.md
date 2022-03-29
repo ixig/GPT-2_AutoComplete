@@ -1,5 +1,8 @@
-# Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
+![](assets/Banner.jpg)
 
+<p>&nbsp;</p>
+
+# Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
 ## Building a Better Text-completion Prediction Engine with Transformers
 
 <p>&nbsp;</p>
@@ -52,8 +55,8 @@ The video below shows the auto-completion engine being evaluated on new3.txt -- 
 
 ---
 
-## How to Setup
-```
+## Installation
+```bash
 git clone https://github.com/ixig/GPT-2_AutoComplete.git
 cd GPT-2_AutoComplete
 conda create --name gpt2ac --file requirements.txt
@@ -63,9 +66,7 @@ python -m spacy download en_core_web_md
 
 ---
 
-## How To Use
-
-#### Example Usage :
+## Usage
 ```
 export NYT_API_KEY="..."
 
