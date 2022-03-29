@@ -1,7 +1,5 @@
 ![](assets/Banner.jpg)
 
-<p>&nbsp;</p>
-
 # Context Fine-Tuned, GPT-2 Auto-Completion Text Editor
 ## Building a Better Text-completion Prediction Engine with Transformers
 
