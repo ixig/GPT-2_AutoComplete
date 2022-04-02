@@ -3,6 +3,7 @@ import os
 import sys
 from glob import glob
 from time import sleep
+from typing import Any
 
 import requests
 from bs4 import BeautifulSoup
@@ -17,9 +18,11 @@ API_KEY = ""
 BASE_URL_V2 = "https://api.nytimes.com/svc/{}/v2/"
 BASE_URL_V3 = "https://api.nytimes.com/svc/{}/v3/"
 
+key: str
 
-def argparser():
-    def dir_path(path):
+
+def argparser() -> argparse.Namespace:
+    def dir_path(path: str) -> str:
         if os.path.isdir(path):
             return path
         else:
@@ -47,7 +50,7 @@ def argparser():
     return parser.parse_args()
 
 
-def get(api, json, q=""):
+def get(api: str, json: str, q: str = "") -> Any:
     query = q and ("?q=" + q)
     api_key = "&api-key=" if q else "?api-key="
     base_url = BASE_URL_V3 if api == "news" else BASE_URL_V2
@@ -59,7 +62,7 @@ def get(api, json, q=""):
     return response.json()
 
 
-def main(argv):
+def main() -> int:
     args = argparser()
     global key
     key = args.api_key
@@ -71,10 +74,10 @@ def main(argv):
     assert resp["status"] == "OK"
 
     hits = [x for x in resp["results"] if FACET in x["des_facet"]]
-    hits.sort(key=lambda x: x["title"])
+    hits.sort(key=lambda x: x["title"])  # type: ignore
     titles_urls = [(hit["title"], hit["url"]) for hit in hits]
 
-    for title, url in titles_urls[:2]:
+    for title, url in titles_urls:
         if title[:SAVE_FILENAME_MAXLEN] + ".txt" in existing_files:
             print(f"SKIPPING: {title}")
             continue
@@ -88,8 +91,8 @@ def main(argv):
         body = soup.find("body")
         title = body.find(class_=CLASS_TITLE).text
         paragraphs = body.find_all(class_=CLASS_PARAGH)
-        text = [x.text for x in paragraphs]
-        text = "\n\n".join(text)
+        texts = [x.text for x in paragraphs]
+        text = "\n\n".join(texts)
 
         with open(os.path.join(args.save_dir, title[:SAVE_FILENAME_MAXLEN] + ".txt"), "w") as f:
             f.write(title + "\n\n")
@@ -97,6 +100,8 @@ def main(argv):
 
         sleep(API_DELAY)
 
+    return 0
+
 
 if __name__ == "__main__":
-    main(sys.argv)
+    exit(main())

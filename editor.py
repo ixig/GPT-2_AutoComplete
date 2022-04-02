@@ -2,10 +2,10 @@ import argparse
 import curses
 import os
 import re
+from typing import Any, List, Optional, Union
 
 import torch
-from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
-
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer  # type:ignore
 
 COLOR_BRIGHT = 8
 EDITOR_ROWS = 28
@@ -28,12 +28,12 @@ the burning wreckage of the building.
 
 
 class WinDebug:
-    def __init__(self, h, w, y, x) -> None:
+    def __init__(self, h: int, w: int, y: int, x: int) -> None:
         if not DEBUGGING:
             return
         self.win = curses.newwin(h, w, y, x)
 
-    def __call__(self, s):
+    def __call__(self, s: Any) -> None:
         if not DEBUGGING:
             return
         if not isinstance(s, str):
@@ -48,7 +48,9 @@ class WinPred:
     COL_OFFS = (0, 16, 32, 48, 64)
     CHOICES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
-    def __init__(self, h, w, y, x, a_choice, a_pred, a_disabled) -> None:
+    def __init__(
+        self, h: int, w: int, y: int, x: int, a_choice: int, a_pred: int, a_disabled: int
+    ) -> None:
         self.win = curses.newwin(h, w, y, x)
         self.disabled = False
         self.preds = [""] * self.NUM_PREDS
@@ -56,7 +58,7 @@ class WinPred:
         self.a_pred = a_pred
         self.a_disabled = a_disabled
 
-    def show_preds(self, preds):
+    def show_preds(self, preds: Optional[List[str]]) -> None:
         self.win.clear()
         if preds is not None:
             assert len(preds) == self.NUM_PREDS
@@ -72,7 +74,7 @@ class WinPred:
                 self.win.addstr(y, x + 2, f"{pred[:12]}", self.a_pred)
         self.win.refresh()
 
-    def disable(self, disable):
+    def disable(self, disable: bool) -> None:
         self.disabled = disable
         self.show_preds(None)
 
@@ -81,7 +83,7 @@ class Editor:
     PAD_MAX_LINES = 200
     LINES_LOOKBACK = 5
 
-    def __init__(self, h, w, win_y, win_x) -> None:
+    def __init__(self, h: int, w: int, win_y: int, win_x: int) -> None:
         self.pad = curses.newpad(self.PAD_MAX_LINES, 80)
         self.h = h
         self.w = w
@@ -93,7 +95,7 @@ class Editor:
         self.pat_blank = re.compile(r"^\s*$")
         self.pat_parag = re.compile(r"\s{2,}$")
 
-    def refresh(self):
+    def refresh(self) -> None:
         self.pad.refresh(
             0 if self.cy < self.h else (self.cy - self.h + 1),
             0,
@@ -103,18 +105,18 @@ class Editor:
             self.win_x + self.w,
         )
 
-    def update_cursor(self, n):
+    def update_cursor(self, n: int) -> None:
         if self.cx + n < 0:
             self.cy -= 1 + max(0, (n // self.w - 1))
         if self.cx + n >= self.w:
             self.cy += 1 + max(0, (n // self.w - 1))
         self.cx = (self.cx + n) % self.w
 
-    def refresh_cursor(self):
+    def refresh_cursor(self) -> None:
         self.pad.move(self.cy, self.cx)
         self.refresh()
 
-    def get_text(self):
+    def get_text(self) -> str:
         start_y = max(0, self.cy - self.LINES_LOOKBACK)
         buf = [
             self.pad.instr(row, 0, self.w).decode("utf-8") for row in range(start_y, self.cy + 1)
@@ -123,24 +125,24 @@ class Editor:
         text = self.pat_spc.sub(" ", "".join(buf))
         return text
 
-    def get_buf(self):
+    def get_buf(self) -> str:
         buf = [self.pad.instr(row, 0, self.w).decode("utf-8") for row in range(self.cy + 1)]
         buf = ["\n" if self.pat_blank.match(row) else row for row in buf]
         buf = [(row.rstrip() + "\n") if self.pat_parag.search(row) else row for row in buf]
         text = "".join(buf)
         return text
 
-    def addstr(self, s, attr=curses.A_NORMAL):
+    def addstr(self, s: str, attr: int = curses.A_NORMAL) -> None:
         self.pad.addstr(self.cy, self.cx, s, attr)
         self.cy, self.cx = self.pad.getyx()
         self.refresh()
 
-    def addch(self, ch):
+    def addch(self, ch: str) -> None:
         self.pad.addch(self.cy, self.cx, ch)
         self.update_cursor(1)
         self.refresh()
 
-    def backspace(self):
+    def backspace(self) -> None:
         if self.cy == self.cx == 0:
             return
         self.pad.delch(self.cy, self.cx)
@@ -149,7 +151,7 @@ class Editor:
         self.pad.clrtoeol()
         self.refresh()
 
-    def newline(self):
+    def newline(self) -> None:
         self.pad.clrtoeol()
         self.cx = 0
         self.cy += 1
@@ -157,7 +159,7 @@ class Editor:
         self.pad.clrtoeol()
         self.refresh()
 
-    def cmdkey(self, key):
+    def cmdkey(self, key: Union[int, str]) -> None:
         if key == curses.KEY_BACKSPACE or key == "\x7f" or key == "\b":
             # https://stackoverflow.com/a/54303430
             self.backspace()
@@ -181,7 +183,7 @@ class Predictor:
     NUM_BEAMS = NUM_PREDS
     EXTRA_PREDS = 0
 
-    def __init__(self, checkpoint) -> None:
+    def __init__(self, checkpoint: str) -> None:
         self.pat_mkr = re.compile(r"(\^+)")
         self.pat_mkr_end = re.compile(r"\^+$")
         self.pat_sep = re.compile(r"[\s-]+")
@@ -198,7 +200,7 @@ class Predictor:
             self.device
         )
 
-    def predict(self, text):
+    def predict(self, text: str) -> List[str]:
         text_sep = " ".join(self.pat_sep.split(text)[-self.LOOKBACK :])
         self.text_sep = text_sep
         input_ids = self.tokenizer(text_sep, return_tensors="pt")["input_ids"].to(self.device)
@@ -247,7 +249,16 @@ class Predictor:
 
 
 class KeyParser:
-    def __init__(self, predictor, win_pred, win_editor, win_debug, a_top1, a_top5, a_top10) -> None:
+    def __init__(
+        self,
+        predictor: Predictor,
+        win_pred: WinPred,
+        win_editor: Editor,
+        win_debug: WinDebug,
+        a_top1: int,
+        a_top5: int,
+        a_top10: int,
+    ) -> None:
         self.predictor = predictor
         self.win_pred = win_pred
         self.editor = win_editor
@@ -263,7 +274,7 @@ class KeyParser:
         self.win_pred.show_preds(self.preds)
         self.editor.refresh_cursor()
 
-    def parse(self, key):
+    def parse(self, key: str) -> bool:
         if len(key) == 1 and (key.isprintable() or key == "\n"):
             if key in [" ", "-", "\n"] or (key.isdigit() and not self.escaped):
                 if key in [" ", "-"]:
@@ -303,7 +314,7 @@ class KeyParser:
         return True
 
 
-def main(scr, args):
+def main(scr: curses.window, args: argparse.Namespace) -> int:
     scr.clear()
     scr.refresh()
 
@@ -344,8 +355,8 @@ def main(scr, args):
     return 0
 
 
-def argparser():
-    def dir_path(path):
+def argparser() -> argparse.Namespace:
+    def dir_path(path: str) -> str:
         if os.path.isdir(path):
             return path
         else:

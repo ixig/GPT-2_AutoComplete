@@ -3,7 +3,7 @@ import os
 import re
 
 import torch
-from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer  # type: ignore
 
 
 class Colors:
@@ -35,8 +35,8 @@ NUM_BEAMS = NUM_PREDS
 EXTRA_PREDS = 0
 
 
-def argparser():
-    def dir_path(path):
+def argparser() -> argparse.Namespace:
+    def dir_path(path: str) -> str:
         if os.path.isdir(path):
             return path
         else:
@@ -66,7 +66,7 @@ def argparser():
     return parser.parse_args()
 
 
-def main():
+def main() -> int:
     args = argparser()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"

@@ -46,8 +46,8 @@ PLACES_WHITELIST = [ # fmt: off
 # fmt: on
 
 
-def argparser():
-    def dir_path(path):
+def argparser() -> argparse.Namespace:
+    def dir_path(path: str) -> str:
         if os.path.isdir(path):
             return path
         else:
@@ -67,8 +67,8 @@ def argparser():
     return args
 
 
-def main():
-    def process_file(text):
+def main() -> int:
+    def process_file(text: str) -> str:
         doc = nlp(text)
         for ent in reversed(doc.ents):
             if ent.label == 380:  # persons

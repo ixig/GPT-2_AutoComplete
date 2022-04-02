@@ -3,8 +3,8 @@ import os
 from glob import glob
 
 
-def argparser():
-    def dir_path(path):
+def argparser() -> argparse.Namespace:
+    def dir_path(path: str) -> str:
         if os.path.isdir(path):
             return path
         else:
@@ -18,7 +18,7 @@ def argparser():
     return parser.parse_args()
 
 
-def main():
+def main() -> int:
     args = argparser()
 
     files = glob(os.path.join(args.input_dir, "*.txt"))
